@@ -1,5 +1,7 @@
 package com.blinkit.clone.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +13,39 @@ public class UserService {
 	@Autowired
 	UserDao userDao;
 	
-	public void signUp(User user) {
-		userDao.save(user);
-		
+	public User signUp(User user) throws Exception {
+		if(user.getEmail()== null || user.getEmail().trim().equals("")) {
+			throw new Exception("email is required");
+		}
+		else if(user.getUserName().equals("")) {
+			throw new Exception("Username is required");
+		}else if(user.getPassword().equals("")) {
+			throw new Exception("Password is required");
+		}
+		User available = userDao.findByEmail(user.getEmail());
+		if(available!= null) {
+			throw new Exception("already registered email");
+		}
+		User created_user = userDao.save(user);
+		return created_user;
 	}
 
-	public User login(User user) {
+	public User login(User user)throws Exception {
+		if(user.getEmail()==null) {
+			throw new Exception("Email is required");
+		}else if(user.getPassword()==null) {
+			throw new Exception("password is required");
+		}
 		user = userDao.findByEmailAndPassword(user.getEmail(), user.getPassword());
 		return user;
+	}
+	
+	public User getUserById(Long id) {
+		User user = userDao.getById(id);
+		if(user != null) {
+			return user;
+		}
+		return null;
 	}
 
 }
