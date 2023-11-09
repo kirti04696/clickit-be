@@ -16,22 +16,24 @@ public class User {
 	private String userName;
 	private String password;
 	private Date createdDate;
+	private String contact;
+	
 	
 	public User() {
 		super();
 	}
 
-	
 
-	public User(Long userId, String email, String userName, String password, Date createdDate) {
+	public User(Long userId, String email, String userName, String password, Date createdDate, String contact) {
 		super();
 		this.userId = userId;
 		this.email = email;
 		this.userName = userName;
 		this.password = password;
 		this.createdDate = createdDate;
+		this.contact = contact;
+		
 	}
-
 
 
 	public Long getUserId() {
@@ -86,10 +88,21 @@ public class User {
 
 
 
+	public String getContact() {
+		return contact;
+	}
+
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", email=" + email + ", userName=" + userName + ", password=" + password
-				+ ", createdDate=" + createdDate + "]";
+				+ ", createdDate=" + createdDate + ", contact=" + contact + "]";
 	}
 
 	
