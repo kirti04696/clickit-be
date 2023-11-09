@@ -95,6 +95,7 @@ public class UserController {
 			response.setStatus(HttpStatus.OK);
 			return response.sendResponse();
 		}
+		
 	}
 	
 	public ResponseEntity<Object> addAddress(@RequestBody Address address) {
