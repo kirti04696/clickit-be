@@ -42,8 +42,8 @@ public class UserController {
 		
 	}
 	
-	@CrossOrigin
-	@GetMapping("/login")
+	@CrossOrigin()
+	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody User user) {
 		try {
 			user = userService.login(user);
