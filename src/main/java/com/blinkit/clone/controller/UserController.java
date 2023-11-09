@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.blinkit.clone.common.ErrorResponse;
+import com.blinkit.clone.common.Response;
 import com.blinkit.clone.model.Address;
 import com.blinkit.clone.model.Token;
 import com.blinkit.clone.model.User;
@@ -32,12 +33,29 @@ public class UserController {
 	@CrossOrigin
 	@PostMapping("/signUp")
 	public ResponseEntity<Object> signUp(@RequestBody User user) {
+		Response response = new Response();
 		try {
+			if(user.getEmail() == "" || user.getEmail() == null) {
+				response.setMessage("Email is required");
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				return response.sendResponse();
+			}
+			else if(user.getPassword() == "" || user.getPassword() == null) {
+				response.setMessage("Password is required");
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				return response.sendResponse();
+			}
+			else if(user.getUserName() ==null || user.getUserName().equals("")) {
+				response.setMessage("User name is required");
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				return response.sendResponse();
+			}
 			user = userService.signUp(user);
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+			response.setMessage(e.getMessage());
+			response.setStatus(HttpStatus.BAD_REQUEST);
+			return response.sendResponse();
 		}   
 		
 	}
@@ -45,20 +63,39 @@ public class UserController {
 	@CrossOrigin()
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody User user) {
+		Response response = new Response();
+		User newUser = null;
 		try {
-			user = userService.login(user);
+			if(user.getEmail() == "" || user.getEmail() == null) {
+				response.setMessage("Email is required");
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				return response.sendResponse();
+			}
+			else if(user.getPassword() == "" || user.getPassword() == null) {
+				response.setMessage("Password is required");
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				return response.sendResponse();
+			}
+			 
+			newUser = userService.login(user);
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
-		if(user == null)return new ResponseEntity("login failed", HttpStatus.UNAUTHORIZED);
+		if(newUser == null) {
+			response.setMessage("login failed");
+			response.setStatus(HttpStatus.BAD_REQUEST);
+			return response.sendResponse();
+		}
 		else {
-			Token token= tokenService.createToken(user.getUserId());
-			
-			return new ResponseEntity(token, HttpStatus.OK);
+			Token token= tokenService.createToken(newUser.getUserId());
+			response.setData(token);
+			response.setMessage("Successfully login.");
+			response.setStatus(HttpStatus.OK);
+			return response.sendResponse();
 		}
 	}
-	
 	
 	public ResponseEntity<Object> addAddress(@RequestBody Address address) {
 		
@@ -75,14 +112,19 @@ public class UserController {
 	@CrossOrigin
 	@GetMapping("/my-profile")
 	public ResponseEntity<Object> profile(@RequestHeader("token") String token){
+		Response response = new Response();
 		try {
 			User user = tokenService.getUserByToken(token);
-			return new ResponseEntity<>(user,HttpStatus.OK);
+			response.setData(user);
+			response.setMessage("User profile details fetched successfully.");
+			response.setStatus(HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ResponseEntity<Object>(new ErrorResponse(e.getMessage()),HttpStatus.BAD_REQUEST);
+			response.setMessage(e.getMessage());
+			response.setStatus(HttpStatus.BAD_REQUEST);
 		}
+		return response.sendResponse();
 //		return null;
 		
 	}

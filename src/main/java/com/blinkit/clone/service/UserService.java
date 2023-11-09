@@ -14,17 +14,10 @@ public class UserService {
 	UserDao userDao;
 	
 	public User signUp(User user) throws Exception {
-		if(user.getEmail()== null || user.getEmail().trim().equals("")) {
-			throw new Exception("email is required");
-		}
-		else if(user.getUserName().equals("")) {
-			throw new Exception("Username is required");
-		}else if(user.getPassword().equals("")) {
-			throw new Exception("Password is required");
-		}
+		
 		User available = userDao.findByEmail(user.getEmail());
 		if(available!= null) {
-			throw new Exception("already registered email");
+			throw new Exception("Already registered email");
 		}
 		User created_user = userDao.save(user);
 		return created_user;
