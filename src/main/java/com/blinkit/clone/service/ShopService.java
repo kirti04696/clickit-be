@@ -5,6 +5,8 @@ import com.blinkit.clone.model.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShopService {
 
@@ -19,5 +21,9 @@ public class ShopService {
     public Shop getById(Integer shopId){
         Shop shop = shopDao.getOne(shopId);
         return shop;
+    }
+
+    public List<Shop> getAllShops(){
+        return shopDao.findAll();
     }
 }

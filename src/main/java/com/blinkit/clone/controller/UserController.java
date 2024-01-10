@@ -44,6 +44,7 @@ public class UserController {
 				response.setStatus(HttpStatus.BAD_REQUEST);
 				return response.sendResponse();
 			}
+			user.setUserType("USER");
 			user = userService.signUp(user);
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		} catch (Exception e) {

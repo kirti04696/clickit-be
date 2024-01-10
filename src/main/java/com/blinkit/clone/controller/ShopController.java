@@ -4,6 +4,7 @@ import com.blinkit.clone.common.Response;
 import com.blinkit.clone.model.Shop;
 import com.blinkit.clone.model.User;
 import com.blinkit.clone.service.ShopService;
+import com.blinkit.clone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,17 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping(value = "/register")
     public ResponseEntity<Object> registerShop(@RequestBody Shop shop, @RequestBody User shopOwner){
         Response response = new Response();
         try{
             shop.setShopStatus("PENDING");
             shopService.addShop(shop);
+            shopOwner.setUserType("SHOP_OWNER");
+            userService.signUp(shopOwner);
             response.setData(shop);
         }catch (Exception e){
             response.setMessage(e.getMessage());

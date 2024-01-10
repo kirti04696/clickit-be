@@ -17,6 +17,8 @@ public class User {
 	private String password;
 	private Date createdDate;
 	private String contact;
+
+	private String userType;
 	
 	
 	public User() {
@@ -24,18 +26,15 @@ public class User {
 	}
 
 
-	public User(Long userId, String email, String name, String password, Date createdDate, String contact) {
-		super();
+	public User(Long userId, String email, String name, String password, Date createdDate, String contact, String userType) {
 		this.userId = userId;
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.createdDate = createdDate;
 		this.contact = contact;
-		
+		this.userType = userType;
 	}
-
-
 	public Long getUserId() {
 		return userId;
 	}
@@ -97,14 +96,24 @@ public class User {
 		this.contact = contact;
 	}
 
+	public String getUserType() {
+		return userType;
+	}
 
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", email=" + email + ", name=" + name + ", password=" + password
-				+ ", createdDate=" + createdDate + ", contact=" + contact + "]";
+		return "User{" +
+				"userId=" + userId +
+				", email='" + email + '\'' +
+				", name='" + name + '\'' +
+				", password='" + password + '\'' +
+				", createdDate=" + createdDate +
+				", contact='" + contact + '\'' +
+				", userType='" + userType + '\'' +
+				'}';
 	}
-
-	
-	
 }

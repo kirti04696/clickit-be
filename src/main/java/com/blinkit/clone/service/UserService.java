@@ -1,6 +1,6 @@
 package com.blinkit.clone.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +39,12 @@ public class UserService {
 			return user;
 		}
 		return null;
+	}
+
+	public List<User> getAllUser() {
+		List<User> users = userDao.findAll();
+
+		return users;
 	}
 
 }
