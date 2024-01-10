@@ -13,7 +13,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 	private String email;
-	private String userName;
+	private String name;
 	private String password;
 	private Date createdDate;
 	private String contact;
@@ -24,11 +24,11 @@ public class User {
 	}
 
 
-	public User(Long userId, String email, String userName, String password, Date createdDate, String contact) {
+	public User(Long userId, String email, String name, String password, Date createdDate, String contact) {
 		super();
 		this.userId = userId;
 		this.email = email;
-		this.userName = userName;
+		this.name = name;
 		this.password = password;
 		this.createdDate = createdDate;
 		this.contact = contact;
@@ -46,13 +46,13 @@ public class User {
 	}
 
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
@@ -101,7 +101,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", email=" + email + ", userName=" + userName + ", password=" + password
+		return "User [userId=" + userId + ", email=" + email + ", name=" + name + ", password=" + password
 				+ ", createdDate=" + createdDate + ", contact=" + contact + "]";
 	}
 

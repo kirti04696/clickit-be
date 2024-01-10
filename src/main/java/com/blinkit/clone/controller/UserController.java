@@ -4,14 +4,7 @@ import org.hibernate.mapping.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.blinkit.clone.common.ErrorResponse;
@@ -23,6 +16,7 @@ import com.blinkit.clone.service.TokenService;
 import com.blinkit.clone.service.UserService;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	UserService userService;
@@ -31,7 +25,7 @@ public class UserController {
 	TokenService tokenService;
 	
 	@CrossOrigin
-	@PostMapping("/signUp")
+	@PostMapping("/signup")
 	public ResponseEntity<Object> signUp(@RequestBody User user) {
 		Response response = new Response();
 		try {
@@ -45,7 +39,7 @@ public class UserController {
 				response.setStatus(HttpStatus.BAD_REQUEST);
 				return response.sendResponse();
 			}
-			else if(user.getUserName() ==null || user.getUserName().equals("")) {
+			else if(user.getName() ==null || user.getName().equals("")) {
 				response.setMessage("User name is required");
 				response.setStatus(HttpStatus.BAD_REQUEST);
 				return response.sendResponse();
