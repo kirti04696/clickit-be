@@ -1,9 +1,6 @@
 package com.blinkit.clone.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Token {
@@ -12,7 +9,8 @@ public class Token {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int tokenId;
 	private String token;
-	private Long userId;
+	@OneToOne
+	private User user;
 	
 	
 	public Token() {
@@ -20,10 +18,10 @@ public class Token {
 	}
 
 
-	public Token(String token, Long userId) {
+	public Token(String token, User user) {
 		super();
 		this.token = token;
-		this.userId = userId;
+		this.user = user;
 	}
 
 
@@ -47,19 +45,19 @@ public class Token {
 	}
 
 
-	public Long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Token [tokenId=" + tokenId + ", token=" + token + ", userId=" + userId + "]";
+		return "Token [tokenId=" + tokenId + ", token=" + token + ", userId=" + user + "]";
 	}
 	
 	

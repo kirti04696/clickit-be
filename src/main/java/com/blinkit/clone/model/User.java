@@ -2,10 +2,12 @@ package com.blinkit.clone.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class User {
@@ -14,7 +16,9 @@ public class User {
 	private Long userId;
 	private String email;
 	private String name;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
+	@CreationTimestamp
 	private Date createdDate;
 	private String contact;
 

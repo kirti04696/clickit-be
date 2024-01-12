@@ -20,7 +20,7 @@ public class TokenService {
 	@Autowired
 	UserService userService;
 
-	public Token createToken(long userId) {
+	public Token createToken(User user) {
 		 UUID uuid = UUID.randomUUID();
 		 Token existingToken;
 		 String uuidAsString;
@@ -28,7 +28,7 @@ public class TokenService {
 	    	 uuidAsString = uuid.toString();
 	    	 existingToken = tokenDao.findByToken(uuidAsString);
 	     }while(existingToken != null);
-	     Token token = new Token(uuidAsString, userId);
+	     Token token = new Token(uuidAsString, user);
 	     token = tokenDao.save(token);
 		return token;
 	}
@@ -46,7 +46,7 @@ public class TokenService {
 		if(existingToken == null) {
 			throw new Exception("Not a valid token!");
 		}
-		User user = userService.getUserById(existingToken.getUserId());
-		return user;
+
+		return existingToken.getUser();
 	}
 }

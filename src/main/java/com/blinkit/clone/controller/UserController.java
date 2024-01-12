@@ -84,7 +84,7 @@ public class UserController {
 			return response.sendResponse();
 		}
 		else {
-			Token token= tokenService.createToken(newUser.getUserId());
+			Token token= tokenService.createToken(newUser);
 			response.setData(token);
 			response.setMessage("Successfully login.");
 			response.setStatus(HttpStatus.OK);
@@ -107,10 +107,9 @@ public class UserController {
 	
 	@CrossOrigin
 	@GetMapping("/my-profile")
-	public ResponseEntity<Object> profile(@RequestHeader("token") String token){
+	public ResponseEntity<Object> profile(@RequestAttribute("auth-user")User user){
 		Response response = new Response();
 		try {
-			User user = tokenService.getUserByToken(token);
 			response.setData(user);
 			response.setMessage("User profile details fetched successfully.");
 			response.setStatus(HttpStatus.OK);
