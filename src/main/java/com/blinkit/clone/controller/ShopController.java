@@ -17,17 +17,14 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
-    @Autowired
-    private UserService userService;
-
     @PostMapping(value = "/register")
-    public ResponseEntity<Object> registerShop(@RequestBody Shop shop, @RequestBody User shopOwner){
+    public ResponseEntity<Object> registerShop(@RequestBody Shop shop){
         Response response = new Response();
         try{
             shop.setShopStatus("PENDING");
+            shop.getShopOwner().setUserType("SHOP_OWNER");
             shopService.addShop(shop);
-            shopOwner.setUserType("SHOP_OWNER");
-            userService.signUp(shopOwner);
+            response.setStatus(HttpStatus.OK);
             response.setData(shop);
         }catch (Exception e){
             response.setMessage(e.getMessage());
@@ -41,6 +38,7 @@ public class ShopController {
         Response response = new Response();
         try{
             Shop shop = shopService.getById(shopId);
+            response.setStatus(HttpStatus.OK);
             response.setData(shop);
         }catch (Exception e){
             response.setMessage(e.getMessage());

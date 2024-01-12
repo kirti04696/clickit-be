@@ -22,7 +22,7 @@ public class Shop {
     @CreationTimestamp
     private Date addedOn;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User shopOwner;
 
     public Shop() {
