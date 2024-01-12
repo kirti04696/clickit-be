@@ -1,6 +1,9 @@
 package com.blinkit.clone.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 public class Shop {
@@ -16,15 +19,23 @@ public class Shop {
 
     private String shopStatus;
 
+    @CreationTimestamp
+    private Date addedOn;
+
+    @OneToOne
+    private User shopOwner;
+
     public Shop() {
     }
 
-    public Shop(Long shopId, String shopName, String GSTNumber, ShopAddress shopAddress, String shopStatus) {
+    public Shop(Long shopId, String shopName, String GSTNumber, ShopAddress shopAddress, String shopStatus, Date addedOn, User shopOwner) {
         this.shopId = shopId;
         this.shopName = shopName;
         this.GSTNumber = GSTNumber;
         this.shopAddress = shopAddress;
         this.shopStatus = shopStatus;
+        this.addedOn = addedOn;
+        this.shopOwner = shopOwner;
     }
 
     public String getShopStatus() {
@@ -67,6 +78,22 @@ public class Shop {
         this.shopAddress = shopAddress;
     }
 
+    public Date getAddedOn() {
+        return addedOn;
+    }
+
+    public void setAddedOn(Date addedOn) {
+        this.addedOn = addedOn;
+    }
+
+    public User getShopOwner() {
+        return shopOwner;
+    }
+
+    public void setShopOwner(User shopOwner) {
+        this.shopOwner = shopOwner;
+    }
+
     @Override
     public String toString() {
         return "Shop{" +
@@ -74,6 +101,9 @@ public class Shop {
                 ", shopName='" + shopName + '\'' +
                 ", GSTNumber='" + GSTNumber + '\'' +
                 ", shopAddress=" + shopAddress +
+                ", shopStatus='" + shopStatus + '\'' +
+                ", addedOn=" + addedOn +
+                ", shopOwner=" + shopOwner +
                 '}';
     }
 }

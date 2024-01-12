@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 public class ShopAddress {
@@ -19,15 +22,19 @@ public class ShopAddress {
 
     private String pincode;
 
+    @CreationTimestamp
+    private Date createdOn;
+
     public ShopAddress() {
     }
 
-    public ShopAddress(int addressId, String shopNo, String streetNo, String area, String pincode) {
+    public ShopAddress(int addressId, String shopNo, String streetNo, String area, String pincode, Date createdOn) {
         this.addressId = addressId;
         this.shopNo = shopNo;
         this.streetNo = streetNo;
         this.area = area;
         this.pincode = pincode;
+        this.createdOn = createdOn;
     }
 
     public int getAddressId() {
@@ -70,6 +77,14 @@ public class ShopAddress {
         this.pincode = pincode;
     }
 
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
     @Override
     public String toString() {
         return "ShopAddress{" +
@@ -78,6 +93,7 @@ public class ShopAddress {
                 ", streetNo='" + streetNo + '\'' +
                 ", area='" + area + '\'' +
                 ", pincode='" + pincode + '\'' +
+                ", createdOn=" + createdOn +
                 '}';
     }
 }

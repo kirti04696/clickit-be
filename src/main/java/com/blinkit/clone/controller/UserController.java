@@ -84,7 +84,7 @@ public class UserController {
 			return response.sendResponse();
 		}
 		else {
-			Token token= tokenService.createToken(newUser);
+			Token token= tokenService.generateToken(newUser);
 			response.setData(token);
 			response.setMessage("Successfully login.");
 			response.setStatus(HttpStatus.OK);

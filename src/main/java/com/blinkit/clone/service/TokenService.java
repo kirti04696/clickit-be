@@ -1,5 +1,6 @@
 package com.blinkit.clone.service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ public class TokenService {
 	@Autowired
 	UserService userService;
 
-	public Token createToken(User user) {
+	public Token generateToken(User user) {
 		 UUID uuid = UUID.randomUUID();
 		 Token existingToken;
 		 String uuidAsString;
@@ -28,7 +29,9 @@ public class TokenService {
 	    	 uuidAsString = uuid.toString();
 	    	 existingToken = tokenDao.findByToken(uuidAsString);
 	     }while(existingToken != null);
-	     Token token = new Token(uuidAsString, user);
+	     Token token = new Token();
+		 token.setToken(uuidAsString);
+		 token.setUser(user);
 	     token = tokenDao.save(token);
 		return token;
 	}

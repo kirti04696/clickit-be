@@ -19,7 +19,7 @@ public class User {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	@CreationTimestamp
-	private Date createdDate;
+	private Date createdOn;
 	private String contact;
 
 	private String userType;
@@ -30,12 +30,12 @@ public class User {
 	}
 
 
-	public User(Long userId, String email, String name, String password, Date createdDate, String contact, String userType) {
+	public User(Long userId, String email, String name, String password, Date createdOn, String contact, String userType) {
 		this.userId = userId;
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		this.createdDate = createdDate;
+		this.createdOn = createdOn;
 		this.contact = contact;
 		this.userType = userType;
 	}
@@ -69,13 +69,13 @@ public class User {
 	}
 
 
-	public Date getCreatedDate() {
-		return createdDate;
+	public Date getCreatedOn() {
+		return createdOn;
 	}
 
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 	}
 
 
@@ -115,7 +115,7 @@ public class User {
 				", email='" + email + '\'' +
 				", name='" + name + '\'' +
 				", password='" + password + '\'' +
-				", createdDate=" + createdDate +
+				", createdOn=" + createdOn +
 				", contact='" + contact + '\'' +
 				", userType='" + userType + '\'' +
 				'}';
