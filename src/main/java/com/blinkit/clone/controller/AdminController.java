@@ -5,15 +5,17 @@ import com.blinkit.clone.model.Shop;
 import com.blinkit.clone.model.User;
 import com.blinkit.clone.service.ShopService;
 import com.blinkit.clone.service.UserService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -39,11 +41,18 @@ public class AdminController {
     @GetMapping("/users")
     public ResponseEntity<Object> getAllUser(){
         Response response = new Response();
-        List<User> users = userService.getAllUser();
+        List<User> users = userService.getUserByType(Arrays.asList("USER"));
 
         response.setData(users);
         response.setStatus(HttpStatus.OK);
         return response.sendResponse();
 
     }
+
+    @PutMapping("/shop/{shopId}")
+    public ResponseEntity<Object> updateShopStatus(@PathVariable Integer shopId, @DefaultValue("DECLINED") @PathParam("status") String status){
+        Shop shop = shopService.updateShopStatus(shopId, status);
+        return new Response(shop,"Shop status updated.", HttpStatus.OK).sendResponse();
+    }
+
 }

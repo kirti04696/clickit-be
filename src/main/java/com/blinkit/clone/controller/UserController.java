@@ -15,6 +15,7 @@ import com.blinkit.clone.model.User;
 import com.blinkit.clone.service.TokenService;
 import com.blinkit.clone.service.UserService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -54,8 +55,7 @@ public class UserController {
 		}   
 		
 	}
-	
-	@CrossOrigin()
+
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody User user) {
 		Response response = new Response();

@@ -1,6 +1,8 @@
 package com.blinkit.clone.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +43,9 @@ public class UserService {
 		return null;
 	}
 
-	public List<User> getAllUser() {
-		List<User> users = userDao.findAll();
-
+	public List<User> getUserByType(List<String> userTypes) {
+		List<User> users = new ArrayList<>();
+		userTypes.stream().map(userType->userDao.findByUserType(userType)).forEach(y->users.addAll(y));
 		return users;
 	}
 

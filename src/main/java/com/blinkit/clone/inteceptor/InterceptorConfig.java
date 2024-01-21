@@ -9,10 +9,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class InterceptorConfig implements WebMvcConfigurer {
 
     @Autowired
-    UserInterceptor userInterceptor;
+    private UserInterceptor userInterceptor;
+
+    @Autowired
+    private AdminInterceptor adminInterceptor;
+
+    @Autowired
+    private ShopInterceptor shopInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor).addPathPatterns("/user/**").excludePathPatterns("/user/login", "/user/signup");
+        registry.addInterceptor(userInterceptor)
+                .addPathPatterns("/user/**")
+                .addPathPatterns("/address/**")
+                .excludePathPatterns("/user/login", "/user/signup");
+        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
+        registry.addInterceptor(shopInterceptor).addPathPatterns("/shop/**").excludePathPatterns("/shop/register");
     }
 }

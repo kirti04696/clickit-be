@@ -26,4 +26,11 @@ public class ShopService {
     public List<Shop> getAllShops(){
         return shopDao.findAll();
     }
+
+    public Shop updateShopStatus(Integer shopId, String status) {
+        Shop oldShop = shopDao.getById(shopId);
+        oldShop.setShopStatus(status.toUpperCase());
+        shopDao.save(oldShop);
+        return oldShop;
+    }
 }
