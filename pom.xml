@@ -8,11 +8,11 @@
 		<version>3.1.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.blinkit</groupId>
-	<artifactId>clone</artifactId>
+	<groupId>com</groupId>
+	<artifactId>clickit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Blinkit</name>
-	<description>Blinkit clone project for Spring Boot</description>
+	<name>Clickit</name>
+	<description>Clickit project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
