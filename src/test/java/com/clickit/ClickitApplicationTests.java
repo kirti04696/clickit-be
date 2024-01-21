@@ -1,10 +1,10 @@
-package com.blinkit.clone;
+package com.clickit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BlinkitApplicationTests {
+class ClickitApplicationTests {
 
 	@Test
 	void contextLoads() {

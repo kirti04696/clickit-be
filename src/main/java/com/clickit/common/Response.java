@@ -1,4 +1,4 @@
-package com.blinkit.clone.common;
+package com.clickit.common;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

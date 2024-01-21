@@ -1,4 +1,4 @@
-package com.blinkit.clone.common;
+package com.clickit.common;
 
 public class ErrorResponse {
 	private String message;

@@ -1,37 +1,28 @@
-package com.blinkit.clone.controller;
+package com.clickit.controller;
 
-import org.hibernate.mapping.Table;
+import com.clickit.common.Response;
+import com.clickit.model.Address;
+import com.clickit.model.Token;
+import com.clickit.model.User;
+import com.clickit.service.TokenService;
+import com.clickit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.bind.annotation.*;
 
-import com.blinkit.clone.common.ErrorResponse;
-import com.blinkit.clone.common.Response;
-import com.blinkit.clone.model.Address;
-import com.blinkit.clone.model.Token;
-import com.blinkit.clone.model.User;
-import com.blinkit.clone.service.TokenService;
-import com.blinkit.clone.service.UserService;
-
+@CrossOrigin
 @RestController
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
-	UserService userService;
+    UserService userService;
 	
 	@Autowired
-	TokenService tokenService;
+    TokenService tokenService;
 	
 	@CrossOrigin
-	@PostMapping("/signUp")
+	@PostMapping("/signup")
 	public ResponseEntity<Object> signUp(@RequestBody User user) {
 		Response response = new Response();
 		try {
@@ -45,11 +36,12 @@ public class UserController {
 				response.setStatus(HttpStatus.BAD_REQUEST);
 				return response.sendResponse();
 			}
-			else if(user.getUserName() ==null || user.getUserName().equals("")) {
+			else if(user.getName() ==null || user.getName().equals("")) {
 				response.setMessage("User name is required");
 				response.setStatus(HttpStatus.BAD_REQUEST);
 				return response.sendResponse();
 			}
+			user.setUserType("USER");
 			user = userService.signUp(user);
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		} catch (Exception e) {
@@ -59,8 +51,7 @@ public class UserController {
 		}   
 		
 	}
-	
-	@CrossOrigin()
+
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody User user) {
 		Response response = new Response();
@@ -89,7 +80,7 @@ public class UserController {
 			return response.sendResponse();
 		}
 		else {
-			Token token= tokenService.createToken(newUser.getUserId());
+			Token token= tokenService.generateToken(newUser);
 			response.setData(token);
 			response.setMessage("Successfully login.");
 			response.setStatus(HttpStatus.OK);
@@ -112,10 +103,9 @@ public class UserController {
 	
 	@CrossOrigin
 	@GetMapping("/my-profile")
-	public ResponseEntity<Object> profile(@RequestHeader("token") String token){
+	public ResponseEntity<Object> profile(@RequestAttribute("auth-user")User user){
 		Response response = new Response();
 		try {
-			User user = tokenService.getUserByToken(token);
 			response.setData(user);
 			response.setMessage("User profile details fetched successfully.");
 			response.setStatus(HttpStatus.OK);

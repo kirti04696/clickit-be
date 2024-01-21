@@ -1,12 +1,13 @@
-package com.blinkit.clone.service;
+package com.clickit.service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.blinkit.clone.dao.UserDao;
-import com.blinkit.clone.model.User;
+import com.clickit.dao.UserDao;
+import com.clickit.model.User;
 
 @Service
 public class UserService {
@@ -39,6 +40,12 @@ public class UserService {
 			return user;
 		}
 		return null;
+	}
+
+	public List<User> getUserByType(List<String> userTypes) {
+		List<User> users = new ArrayList<>();
+		userTypes.stream().map(userType->userDao.findByUserType(userType)).forEach(y->users.addAll(y));
+		return users;
 	}
 
 }

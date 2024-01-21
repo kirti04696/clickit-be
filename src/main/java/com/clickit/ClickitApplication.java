@@ -1,13 +1,15 @@
-package com.blinkit.clone;
+package com.clickit;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BlinkitApplication {
+@OpenAPIDefinition
+public class ClickitApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BlinkitApplication.class, args);
+		SpringApplication.run(ClickitApplication.class, args);
 	}
 
 }
