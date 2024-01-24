@@ -42,6 +42,7 @@ public class UserController {
 				return response.sendResponse();
 			}
 			user.setUserType("USER");
+
 			user = userService.signUp(user);
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		} catch (Exception e) {
@@ -118,6 +119,45 @@ public class UserController {
 		return response.sendResponse();
 //		return null;
 		
+		
+	}
+	@PutMapping("/change-password")
+	public ResponseEntity<Object>changePassword(@RequestHeader("token") String token,@RequestBody  User newuser)
+	{
+	   	
+		Response response = new Response();
+		//get the user data from token
+	      
+		try {
+			User user=tokenService.getUserByToken(token);
+			
+			//step 1:previous password
+			//step 2:
+			if(user==null)
+			{
+				response.setMessage("Password not matched");
+				response.setStatus(HttpStatus.OK);
+			}
+			else
+			{
+			user.setPassword(newuser.getPassword());
+			userService.updateUser(user);
+			response.setMessage("Your Password is succesfully changed");
+			response.setStatus(HttpStatus.OK);
+			
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setMessage(e.getMessage());
+			response.setStatus(HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		return response.sendResponse();
+		
+		
 	}
 	
 }
+

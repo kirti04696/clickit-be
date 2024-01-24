@@ -9,7 +9,7 @@ import java.util.Date;
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long shopId;
+    private Integer shopId;
 
     private String shopName;
 
@@ -28,7 +28,7 @@ public class Shop {
     public Shop() {
     }
 
-    public Shop(Long shopId, String shopName, String GSTNumber, ShopAddress shopAddress, String shopStatus, Date addedOn, User shopOwner) {
+    public Shop(Integer shopId, String shopName, String GSTNumber, ShopAddress shopAddress, String shopStatus, Date addedOn, User shopOwner) {
         this.shopId = shopId;
         this.shopName = shopName;
         this.GSTNumber = GSTNumber;
@@ -46,11 +46,11 @@ public class Shop {
         this.shopStatus = shopStatus;
     }
 
-    public Long getShopId() {
+    public Integer getShopId() {
         return shopId;
     }
 
-    public void setShopId(Long shopId) {
+    public void setShopId(Integer shopId) {
         this.shopId = shopId;
     }
 
