@@ -50,7 +50,7 @@ public class AdminController {
     }
 
     @PutMapping("/shop/{shopId}")
-    public ResponseEntity<Object> updateShopStatus(@PathVariable Integer shopId, @DefaultValue("DECLINED") @PathParam("status") String status){
+    public ResponseEntity<Object> updateShopStatus(@PathVariable Long shopId, @DefaultValue("DECLINED") @PathParam("status") String status){
         Shop shop = shopService.updateShopStatus(shopId, status);
         return new Response(shop,"Shop status updated.", HttpStatus.OK).sendResponse();
     }

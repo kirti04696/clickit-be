@@ -47,5 +47,10 @@ public class UserService {
 		userTypes.stream().map(userType->userDao.findByUserType(userType)).forEach(y->users.addAll(y));
 		return users;
 	}
+	public User updateUser(User newuser) 
+	{
+		User updatedUser =userDao.save(newuser);
+		return updatedUser;
+	}
 
 }
