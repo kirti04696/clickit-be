@@ -14,7 +14,7 @@ public class Shop {
     private String shopName;
 
     private String GSTNumber;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ShopAddress shopAddress;
 
     private String shopStatus;

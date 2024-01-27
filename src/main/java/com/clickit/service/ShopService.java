@@ -33,4 +33,8 @@ public class ShopService {
         shopDao.save(oldShop);
         return oldShop;
     }
+
+    public void deleteShop(Shop shop) {
+        shopDao.delete(shop);
+    }
 }
