@@ -55,4 +55,23 @@ public class AdminController {
         return new Response(shop,"Shop status updated.", HttpStatus.OK).sendResponse();
     }
 
+    @DeleteMapping(value = "/shop/{shopId}")
+    public ResponseEntity<Object> deleteShopById(@PathVariable Integer shopId){
+        Response response = new Response();
+        try{
+            Shop shop = shopService.getById(shopId);
+            if(shop ==null){
+                response.setMessage("Shop not found");
+            }else {
+                shopService.deleteShop(shop);
+                response.setMessage("Shop deleted");
+            }
+            response.setStatus(HttpStatus.OK);
+        }catch (Exception e){
+            response.setMessage(e.getMessage());
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response.sendResponse();
+    }
+
 }
