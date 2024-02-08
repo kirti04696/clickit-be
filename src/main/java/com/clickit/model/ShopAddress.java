@@ -19,6 +19,9 @@ public class ShopAddress {
     private String streetNo;
 
     private String area;
+    private String state;
+
+    private String country;
 
     private String pincode;
 
@@ -28,11 +31,13 @@ public class ShopAddress {
     public ShopAddress() {
     }
 
-    public ShopAddress(int addressId, String shopNo, String streetNo, String area, String pincode, Date createdOn) {
+    public ShopAddress(int addressId, String shopNo, String streetNo, String area, String state, String country, String pincode, Date createdOn) {
         this.addressId = addressId;
         this.shopNo = shopNo;
         this.streetNo = streetNo;
         this.area = area;
+        this.state = state;
+        this.country = country;
         this.pincode = pincode;
         this.createdOn = createdOn;
     }
@@ -85,6 +90,22 @@ public class ShopAddress {
         this.createdOn = createdOn;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         return "ShopAddress{" +
@@ -92,6 +113,8 @@ public class ShopAddress {
                 ", shopNo='" + shopNo + '\'' +
                 ", streetNo='" + streetNo + '\'' +
                 ", area='" + area + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
                 ", pincode='" + pincode + '\'' +
                 ", createdOn=" + createdOn +
                 '}';

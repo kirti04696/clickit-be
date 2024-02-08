@@ -11,7 +11,7 @@ public class ProductVariety {
     private Integer productVarietyId;
     private String unit;
     private Integer price;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ProductImage> images;
 
     public ProductVariety() {
