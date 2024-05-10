@@ -1,9 +1,8 @@
 package com.clickit.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -12,18 +11,38 @@ public class ProductDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productDetailsId;
+    @Column(length = 355)
+    @JsonProperty("Key Feature")
     private String keyfeature;
+    @Column(length = 355)
+    @JsonProperty("Ingredients")
     private String ingredients;
+
+    @JsonProperty("Self Life")
     private String selfLife;
+    @JsonProperty("Manufacturor Details")
     private String manufacturorDetails;
+    @JsonProperty("Marketed By")
     private  String marketedBy;
+    @JsonProperty("FSSAI Licence")
     private String fssaiLicence;
+    @JsonProperty("Country Of Origin")
     private String countryOfOrigin;
+    @JsonProperty("Customer Care Details")
     private String customerCareDetails;
+    @Column(length = 1023)
+    @JsonProperty("Return Policy")
     private String returnPolicy;
+    @Column(length = 1023)
     private String productDescription;
+    @Column(length = 1023)
+    @JsonProperty("Desclaimer")
     private String Desclaimer;
+    @JsonProperty("Expiry Date")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date expiryDate;
+    @JsonProperty("Manufactured Date")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date mfd;
 
     public ProductDetails() {

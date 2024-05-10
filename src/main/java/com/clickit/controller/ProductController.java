@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/product")
@@ -44,6 +46,22 @@ public class ProductController {
             response.setMessage("found");
             response.setStatus(HttpStatus.OK);
             response.setData(product);
+        }
+        return response.sendResponse();
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<Object> getProducts(){
+        Response response = new Response();
+        List<Product> products = productService.getAllProducts();
+        if(products == null){
+            response.setMessage("product not found");
+            response.setStatus(HttpStatus.OK);
+        }
+        else{
+            response.setMessage("found");
+            response.setStatus(HttpStatus.OK);
+            response.setData(products);
         }
         return response.sendResponse();
     }

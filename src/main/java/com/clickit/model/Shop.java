@@ -24,11 +24,13 @@ public class Shop {
 
     @OneToOne(cascade = CascadeType.ALL)
     private User shopOwner;
+    @OneToOne(cascade = CascadeType.ALL)
+    private BankAccountDetail bankAccount;
 
     public Shop() {
     }
 
-    public Shop(Integer shopId, String shopName, String GSTNumber, ShopAddress shopAddress, String shopStatus, Date addedOn, User shopOwner) {
+    public Shop(Integer shopId, String shopName, String GSTNumber, ShopAddress shopAddress, String shopStatus, Date addedOn, User shopOwner, BankAccountDetail bankAccount) {
         this.shopId = shopId;
         this.shopName = shopName;
         this.GSTNumber = GSTNumber;
@@ -36,6 +38,15 @@ public class Shop {
         this.shopStatus = shopStatus;
         this.addedOn = addedOn;
         this.shopOwner = shopOwner;
+        this.bankAccount = bankAccount;
+    }
+
+    public BankAccountDetail getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccountDetail bankAccount) {
+        this.bankAccount = bankAccount;
     }
 
     public String getShopStatus() {
@@ -104,6 +115,7 @@ public class Shop {
                 ", shopStatus='" + shopStatus + '\'' +
                 ", addedOn=" + addedOn +
                 ", shopOwner=" + shopOwner +
+                ", bankAccount=" + bankAccount +
                 '}';
     }
 }

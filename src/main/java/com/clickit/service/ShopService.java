@@ -2,6 +2,7 @@ package com.clickit.service;
 
 import com.clickit.dao.ShopDao;
 import com.clickit.model.Shop;
+import com.clickit.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,10 @@ public class ShopService {
     public void deleteShop(Shop shop) {
         shopDao.delete(shop);
     }
+
+    public Shop getShopByShopOwner(User user){
+        Shop shop = shopDao.findByShopOwner(user);
+        return shop;
+    }
+
 }
