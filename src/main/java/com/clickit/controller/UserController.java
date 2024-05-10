@@ -1,17 +1,18 @@
 package com.clickit.controller;
 
 import com.clickit.common.Response;
-import com.clickit.model.Address;
-import com.clickit.model.Cart;
-import com.clickit.model.Token;
-import com.clickit.model.User;
+import com.clickit.model.*;
 import com.clickit.service.CartService;
+import com.clickit.service.ShopService;
 import com.clickit.service.TokenService;
 import com.clickit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -24,6 +25,9 @@ public class UserController {
     TokenService tokenService;
 	@Autowired
 	CartService cartService;
+
+	@Autowired
+	ShopService shopService;
 	
 	@CrossOrigin
 	@PostMapping("/signup")
@@ -85,8 +89,14 @@ public class UserController {
 			return response.sendResponse();
 		}
 		else {
+			Map<String, Object> data = new HashMap<>();
 			Token token= tokenService.generateToken(newUser);
-			response.setData(token);
+			data.put("tokenData", token);
+			if(newUser.getUserType().equals("SHOP_OWNER")){
+				Shop shop = shopService.getShopByShopOwner(newUser);
+				data.put("shopData", shop);
+			}
+			response.setData(data);
 			response.setMessage("Successfully login.");
 			response.setStatus(HttpStatus.OK);
 			return response.sendResponse();
