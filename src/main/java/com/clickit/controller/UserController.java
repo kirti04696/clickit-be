@@ -2,8 +2,10 @@ package com.clickit.controller;
 
 import com.clickit.common.Response;
 import com.clickit.model.Address;
+import com.clickit.model.Cart;
 import com.clickit.model.Token;
 import com.clickit.model.User;
+import com.clickit.service.CartService;
 import com.clickit.service.TokenService;
 import com.clickit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class UserController {
 	
 	@Autowired
     TokenService tokenService;
+	@Autowired
+	CartService cartService;
 	
 	@CrossOrigin
 	@PostMapping("/signup")
@@ -152,12 +156,29 @@ public class UserController {
 			response.setMessage(e.getMessage());
 			response.setStatus(HttpStatus.BAD_REQUEST);
 		}
-		
-		
+
 		return response.sendResponse();
-		
-		
 	}
-	
+
+	@PostMapping("/add-to-cart")
+	public ResponseEntity<Object> addToCart(@RequestBody Cart cart){
+		Response response = new Response();
+		try {
+			if (cart == null) {
+				response.setMessage("");
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				return response.sendResponse();
+			}
+
+			cart = cartService.addToCart(cart);
+		}catch (Exception e){
+			e.printStackTrace();
+			response.setMessage(e.getMessage());
+			response.setStatus(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(cart, HttpStatus.OK);
+	}
+
 }
 
