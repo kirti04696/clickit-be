@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 @Entity
 public class Cart {
@@ -11,26 +12,23 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartId;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    private Product product;
+    private Integer productId;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    private ProductVariety productVarity;
+    private Integer productVarityId;
 
     private int quantity;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    private User user;
+    private Long userId;
 
     public Cart() {
     }
 
-    public Cart(int cartId, Product product, ProductVariety productVarity, int quantity, User user) {
+    public Cart(int cartId, Integer productId, Integer productVarityId, int quantity, Long userId) {
         this.cartId = cartId;
-        this.product = product;
-        this.productVarity = productVarity;
+        this.productId = productId;
+        this.productVarityId = productVarityId;
         this.quantity = quantity;
-        this.user = user;
+        this.userId = userId;
     }
 
     public int getCartId() {
@@ -41,20 +39,20 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public Product getProduct() {
-        return product;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
-    public ProductVariety getProductVarity() {
-        return productVarity;
+    public Integer getProductVarityId() {
+        return productVarityId;
     }
 
-    public void setProductVarity(ProductVariety productVarity) {
-        this.productVarity = productVarity;
+    public void setProductVarityId(Integer productVarityId) {
+        this.productVarityId = productVarityId;
     }
 
     public int getQuantity() {
@@ -65,22 +63,11 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "cartId=" + cartId +
-                ", product=" + product +
-                ", productVarity=" + productVarity +
-                ", quantity=" + quantity +
-                ", user=" + user +
-                '}';
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

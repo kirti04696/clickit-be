@@ -2,16 +2,16 @@ package com.clickit.controller;
 
 import com.clickit.common.Response;
 import com.clickit.model.*;
-import com.clickit.service.CartService;
-import com.clickit.service.ShopService;
-import com.clickit.service.TokenService;
-import com.clickit.service.UserService;
+import com.clickit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -20,6 +20,11 @@ import java.util.Map;
 public class UserController {
 	@Autowired
     UserService userService;
+	@Autowired
+	ProductService productService;
+
+	@Autowired
+	ProductVarietyService productVarietyService;
 	
 	@Autowired
     TokenService tokenService;
@@ -170,6 +175,7 @@ public class UserController {
 		return response.sendResponse();
 	}
 
+	@CrossOrigin
 	@PostMapping("/add-to-cart")
 	public ResponseEntity<Object> addToCart(@RequestBody Cart cart){
 		Response response = new Response();
@@ -181,13 +187,91 @@ public class UserController {
 			}
 
 			cart = cartService.addToCart(cart);
+
+			Map<String, Object> data = new HashMap<>();
+			data.put("cartId", cart.getCartId());
+			Product product= productService.getProductById(cart.getProductId());
+			data.put("product", product);
+
+			ProductVariety productVariety = productVarietyService.getProductVarietyById(cart.getProductVarityId());
+			data.put("variety", productVariety);
+			data.put("quantity", cart.getQuantity());
+
+
+			response.setData(data);
+			response.setStatus(HttpStatus.OK);
+		}catch (DataIntegrityViolationException e){
+
+			response.setMessage("Already exist in cart");
+			response.setStatus(HttpStatus.BAD_REQUEST);
 		}catch (Exception e){
 			e.printStackTrace();
 			response.setMessage(e.getMessage());
 			response.setStatus(HttpStatus.BAD_REQUEST);
 		}
 
-		return new ResponseEntity<>(cart, HttpStatus.OK);
+		return response.sendResponse();
+	}
+
+	@CrossOrigin
+	@GetMapping("/cart-items")
+	public ResponseEntity<Object> getCartItems(@RequestHeader("token") String token){
+		Response response = new Response();
+		try {
+			List<Map<String, Object>> cartItems = new ArrayList<>();
+			User user = tokenService.getUserByToken(token);
+			if(user != null){
+				List<Cart> userCart = cartService.getUserCartItems(user.getUserId());
+
+				for (Cart cart:userCart){
+					Map<String, Object> data = new HashMap<>();
+					data.put("cartId", cart.getCartId());
+					Product product= productService.getProductById(cart.getProductId());
+					data.put("product", product);
+
+					ProductVariety productVariety = productVarietyService.getProductVarietyById(cart.getProductVarityId());
+					data.put("variety", productVariety);
+					data.put("quantity", cart.getQuantity());
+					cartItems.add(data);
+				}
+
+			}else {
+
+			}
+			response.setData(cartItems);
+			response.setStatus(HttpStatus.OK);
+		}catch (DataIntegrityViolationException e){
+
+			response.setMessage("Already exist in cart");
+			response.setStatus(HttpStatus.BAD_REQUEST);
+		}catch (Exception e){
+			e.printStackTrace();
+			response.setMessage(e.getMessage());
+			response.setStatus(HttpStatus.BAD_REQUEST);
+		}
+
+		return response.sendResponse();
+	}
+
+
+
+	@DeleteMapping(value = "/cart-item/{cartId}")
+	public ResponseEntity<Object> deleteCartItem(@PathVariable Integer cartId){
+		Response response = new Response();
+		try{
+			Cart cart = cartService.getCartItem(cartId);
+			if(cart ==null){
+				response.setMessage("Item not found");
+			}else {
+				cartService.deleteCartItem(cart);
+				response.setMessage("Item deleted");
+			}
+			response.setStatus(HttpStatus.OK);
+		}catch (Exception e){
+			response.setMessage(e.getMessage());
+			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return response.sendResponse();
 	}
 
 }

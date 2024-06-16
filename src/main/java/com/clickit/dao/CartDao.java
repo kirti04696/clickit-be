@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CartDao extends JpaRepository<Cart,Integer> {
-    public List<Cart> findByUser(User user);
+    public List<Cart> findByUserId(Long userId);
 }
