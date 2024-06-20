@@ -3,6 +3,7 @@ package com.clickit.controller;
 import com.clickit.common.Response;
 import com.clickit.model.*;
 import com.clickit.service.*;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -273,6 +274,22 @@ public class UserController {
 		}
 		return response.sendResponse();
 	}
+
+	@CrossOrigin
+	@GetMapping("/search")
+	public ResponseEntity<Object> searchProduct(@RequestParam("key") String productName){
+		Response response = new Response();
+		List<Product> products = productService.searchProduct(productName);
+		if (products == null){
+			response.setMessage("Product not available this time");
+			response.setStatus(HttpStatus.OK);
+		}
+		response.setMessage("Product found");
+		response.setData(products);
+		response.setStatus(HttpStatus.OK);
+		return response.sendResponse();
+	}
+
 
 }
 
